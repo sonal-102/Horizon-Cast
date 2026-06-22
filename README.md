@@ -13,3 +13,10 @@ A responsive weather forecast application built using JavaScript, Tailwind CSS, 
 - Skeleton loading effect
 - Glassmorphism UI
 - Responsive design
+
+## Screen-Recording
+
+https://github.com/user-attachments/assets/ef6df84d-92ac-4c1d-bec4-e924fa24cc21
+
+
+
