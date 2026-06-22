@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="style.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+</style>
+</head>
+<body class="scroll-smooth ">
+   <nav class="bg-slate-800 text-white px-6 py-3 flex items-center gap-4 relative z-50">
+  <h1 class="instrument-serif-regular-italic text-5xl whitespace-nowrap flex-1">
+    Horizon Cast
+    </h1>                                                                                                                                 
+  
+ <div class="md:flex-1 relative">
+  <input
+    type="text"
+    placeholder="Search city..."
+    id="cityInput"
+    class="bg-slate-700 border border-slate-600 rounded-full px-4 py-1.5 pl-10 text-slate-300 placeholder-slate-500 text-sm outline-none focus:border-slate-400,placeholder-slate-   w-full transition duration-300 focus:ring-2 focus:ring-slate-400"
+  >
+<img src="search.png" alt="Search" class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 pointer-events-none"/>
+</div>
+  </nav>
+
+  
+    <div id="currentWeatherSkeleton" 
+class="text-slate-700 rounded-xl m-7 flex flex-col md:flex-row items-center gap-6 
+bg-white/10 backdrop-blur-md border border-white/50 rounded-xl p-10 animate-pulse">
+
+  <div class="flex-1 flex flex-col items-start gap-5">
+
+    <!-- location skeleton -->
+    <div class="h-10 w-48 bg-white/30 rounded-lg"></div>
+
+    <!-- date skeleton -->
+    <div class="h-8 w-64 bg-slate-700/70 rounded-lg"></div>
+
+    <!-- temperature skeleton -->
+    <div class="h-32 w-64 bg-white/30 rounded-xl"></div>
+
+    <!-- condition -->
+    <div class="h-8 w-40 bg-white/30 rounded-lg"></div>
+
+    <!-- wind -->
+    <div class="h-6 w-52 bg-white/30 rounded-lg"></div>
+
+  </div>
+
+
+  <!-- icon skeleton -->
+  <div class="flex-1 flex justify-center">
+    <div class="h-48 w-48 bg-white/30 rounded-full"></div>
+  </div>
+
+</div>
+
+    <div class=" hidden text-slate-700 rounded-xl m-7 flex flex-col md:flex-row items-center gap-6 
+      bg-white/10 backdrop-blur-md border border-white/50 p-10" id="currentWeather">
+        <div class="flex-1 flex flex-col items-start">
+          <div class=" flex items-center">
+            <img src="location-svgrepo-com.svg" alt="Location" class=" h-5 w-5 md:h-8 md:w-8"/>
+       <h3 id="location" class="text-4xl md:text-6xl p-3 font-light tracking-tight text-slate-800"> </h3> 
+       </div>
+       <p id="date" class="text-sm md:text-base font-medium tracking-wide text-white bg-slate-700/70 px-3 py-1 rounded-full inline-block"></p>
+       
+       <h1 id="temperature" class="text-8xl md:text-[10rem] font-extralight leading-none tracking-tighter text-white"></h1>
+       <h2 id="condition" class="text-2xl md:text-4xl font-light italic text-white/80"></h2>
+       <div class="flex items-center gap-4 mt-3">
+      <h2 id="WindSpeed" class="mt-3 bg-white/20 px-4 py-2 rounded-full text-sm backdrop-blur-md"></h2>
+      </div>
+    </div>
+    <div class=" flex-1  rounded-full overflow-hidden flex justify-center">
+        <img src="clear-sky.png" alt="Sunny" class="  w-32 h-auto md:h-auto md:w-64  overflow-hidden hover:" id="weatherIcon"/>
+</div>
+    </div>
+<!-- hourly -->
+    <div id="hourlySkeleton"
+class="text-white p-6 rounded-xl m-7 flex gap-6 
+bg-white/10 backdrop-blur-xl border border-white/20 
+animate-pulse overflow-hidden">
+
+
+<h1 class="h-7 w-48 bg-white/30 rounded"></h1>
+
+
+<div class="flex gap-6">
+
+<div class="h-32 w-24 bg-white/30 rounded-xl"></div>
+<div class="h-32 w-24 bg-white/30 rounded-xl"></div>
+<div class="h-32 w-24 bg-white/30 rounded-xl"></div>
+<div class="h-32 w-24 bg-white/30 rounded-xl"></div>
+
+</div>
+
+</div>
+
+
+
+    <div id="hourlycast" class=" hidden text-white p-6 rounded-xl m-7 flex flex-col gap-6 backdrop-blur-md bg-opacity-60 border border-slate-600 md:justify-center md:items-center justify-start overflow-scroll scrollbar-hide">
+
+  <h1 class="text-2xl md:text-3xl font-bold">HOURLY FORECAST</h1>
+
+  <div class="flex gap-6 overflow-x-auto md:scrollbar-hide py-4">
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-105 transition-transform duration-300" >
+      <p class="text-sm" id="currentHour">Now</p>
+      <img src="sun.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">25°C</p>
+    </div>
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-105 transition-transform duration-300">
+      <p class="text-sm" id="nexthour1">4 PM</p>
+      <img src="clouds.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">24°C</p>
+    </div>
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-105 transition-transform duration-300">
+      <p class="text-sm" id="nexthour2">5 PM</p>
+      <img src="rain.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">22°C</p>
+    </div>
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-105 transition-transform duration-300">
+      <p class="text-sm" id="nexthour3">6 PM</p>
+      <img src="storm.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">20°C</p>
+    </div>
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-105 transition-transform duration-300">
+      <p class="text-sm" id="nexthour4">7 PM</p>
+      <img src="snow.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">20°C</p>
+    </div>
+
+    <!-- Card -->
+    <div class="min-w-[90px] flex flex-col items-center gap-2 bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/20 hover:scale-102 transition-transform duration-300overflow-hidden">
+      <p class="text-sm" id="nexthour5">8 PM</p>
+      <img src="wind.png" class="w-12 h-12 hourlyIcon" />
+      <p class="text-lg font-semibold hourtemp">17°C</p>
+    </div>
+
+  </div>
+  </div>
+  <!-- weekly -->
+    <!-- WEEKLY SKELETON -->
+<div id="weeklySkeleton" class="text-white p-6 rounded-xl m-4 flex flex-col gap-6 bg-slate-800/50 backdrop-blur-xl border border-white/20 
+animate-pulse">
+
+<h1 class="h-8 w-52 bg-white/30 rounded"></h1>
+
+<div class="flex gap-4 overflow-hidden">
+
+<div class="h-44 w-72 bg-white/30 rounded-xl"></div>
+
+<div class="h-44 w-72 bg-white/30 rounded-xl"></div>
+
+</div>
+
+
+</div>
+
+  <div 
+    class=" hidden text-white p-6 rounded-xl m-4 flex flex-col gap-6 backdrop-blur-xl  border border-white/20 shadow-lg animate-slideUp"
+    id="weeklycast">
+
+    <h1 class="text-2xl md:text-3xl font-bold text-center">
+      WEEKLY FORECAST
+    </h1>
+
+
+    <nav id="weekdays">
+      <ul class="flex gap-6 md:gap-10 text-lg overflow-x-auto scrollbar-hide backdrop-blur-md p-4 rounded-xl cursor-pointer justify-center  ">
+
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday1" data-day="monday">Monday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday2" data-day="tuesday">Tuesday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday3" data-day="wednesday">Wednesday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday4" data-day="thursday">Thursday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday5" data-day="friday">Friday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday6" data-day="saturday">Saturday</a></li>
+        <li><a class="weekday-link hover:text-yellow-300 transition weeklyday7" data-day="sunday">Sunday</a></li>
+
+      </ul>
+    </nav>
+
+
+
+    <div id="dayforecast" class="space-y-4">
+
+
+      <!-- Monday -->
+      <section data-section="monday"
+      class="flex animate-slideUp items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="clear-sky.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon">
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday1">
+          Monday
+          </h2>
+
+          <p class="text-slate-300" id="condition1">
+          Sunny
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature1">
+          40°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-1">
+          High: 40°C · Low: 30°C
+          </p>
+
+        </div>
+
+      </section>
+      <section data-section="tuesday"
+      class=" hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="cloud.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon" >
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday2">
+          Tuesday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition2">
+          Cloudy
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature2">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-2">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+
+      <section data-section="wednesday"
+      class="hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="rain.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon" >
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday3">
+          Wednesday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition3">
+          Rainy
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature3">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-3">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+
+      <section data-section="thursday"
+      class="hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="sun.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon">
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday4">
+          Thursday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition4">
+          Sunny
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature4">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-4">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+      <section data-section="friday"
+      class="hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="clouds.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon">
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday5">
+          Friday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition5">
+          Cloudy
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature5">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-5">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+      <section data-section="saturday"
+      class="hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl  p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+          <img src="rain.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon">
+        </div>
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday6">
+          Saturday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition6">
+          Rainy
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature6">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-6">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+
+
+
+
+      <section data-section="sunday"
+      class="hidden animate-slideUp flex items-center gap-4 bg-slate-700/40 backdrop-blur-xl p-4 rounded-xl border border-white/20">
+
+        <div class="flex-1 flex justify-center">
+
+          <img src="storm.png"
+          class="w-32 h-32 md:w-40 md:h-40 weeklyIcon">
+
+        </div>
+
+
+        <div class="flex-1 text-center md:text-left">
+
+          <h2 class="font-bold text-2xl weeklyday7">
+          Sunday
+          </h2>
+
+          <p class="text-slate-300"
+          id="condition7">
+          Storm
+          </p>
+
+          <h1 class="text-5xl font-light my-2"
+          id="temperature7">
+          35°C
+          </h1>
+
+          <p class="text-slate-300"
+          id="highlow-7">
+          High: 35°C · Low: 27°C
+          </p>
+
+        </div>
+
+      </section>
+    </div>
+
+  </div>
+
+
+  </body>
+  <script src="weatherscript.js"></script>
+</html>

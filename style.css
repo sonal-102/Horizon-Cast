@@ -1,0 +1,83 @@
+.instrument-serif-regular {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.instrument-serif-regular-italic {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+.lobster-two-regular {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lobster-two-bold {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lobster-two-regular-italic {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lobster-two-bold-italic {
+  font-family: "Lobster Two", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+body {
+  /* background-image: url('https://img.magnific.com/free-vector/monochrome-realistic-liquid-effect-background_474888-7310.jpg?semt=ais_hybrid&w=740&q=80'); */
+  background-image: url('mountain.png');
+  color: #242323;
+  background-size: cover;
+  background-position: center;
+  scroll-behavior: smooth;
+}
+
+/* Glass scrollbar */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+}
+
+/* Thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+#weekdays ul::-webkit-scrollbar {
+  height: 6px;
+}
+
+#weekdays ul::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+}
+#weekdays ul {
+  scrollbar-width: none; /* Firefox */
+}
+
+#weekdays ul::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
